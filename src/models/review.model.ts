@@ -1,5 +1,6 @@
-import mongoose, { SchemaTypes } from 'mongoose';
+import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
+import { SchemaTypes } from 'mongoose';
 
 await mongooseConnect();
 
@@ -24,4 +25,4 @@ const reviewSchema = new mongoose.Schema({
     },
 });
 
-export const Game = mongoose.model('Review', reviewSchema);
+export const Review = mongoose.model('Review', reviewSchema);
