@@ -1,5 +1,6 @@
-import mongoose, { SchemaTypes } from 'mongoose';
+import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
+import { SchemaTypes } from 'mongoose';
 
 await mongooseConnect();
 

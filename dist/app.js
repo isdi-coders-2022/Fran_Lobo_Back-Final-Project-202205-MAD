@@ -1,15 +1,15 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-//import homeRouter from './routers/home.router.js';
-//import { robotRouter } from './routers/robot.router.js';
+import { gameRouter } from './routers/game.router.js';
+import { userRouter } from './routers/user.router.js';
 export const app = express();
 // los Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
-//app.use('/', homeRouter);
-//app.use('/robot', robotRouter);
+app.use('/game', userRouter);
+app.use('/game', gameRouter);
 app.use((error, req, resp, next) => {
     req;
     next;
