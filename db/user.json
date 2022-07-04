@@ -1,0 +1,35 @@
+[{
+"Name":"Fernando",
+"Apellidos":"C.I.A",
+"Mail":"reserver@cia_secret.com",
+"Pasword":"123456",
+"Avatar": "https://i.pravatar.cc/300",
+"playList": []
+},
+{
+"Name":"Fran",
+"Apellidos":"Lobo",
+"Mail":"bluffingceo@gmail.com",
+"Pasword":"123456",
+"Avatar": "https://i.pravatar.cc/300",
+"playList": []
+},
+{
+    "Name":"Jorge",
+    "Apellidos":"Pilates",
+    "Mail":"como_comounoso@gmail.com",
+    "Pasword":"123456",
+    "Avatar": "https://i.pravatar.cc/300",
+    "playList": []
+},
+{
+    "Name":"Jose",
+    "Apellidos":"Bolívares",
+    "Mail":"picachustart@gmail.com",
+    "Pasword":"123456",
+    "Avatar": "https://i.pravatar.cc/300",
+    "playList": []
+}
+
+
+]
