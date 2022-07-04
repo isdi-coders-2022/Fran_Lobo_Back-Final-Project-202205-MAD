@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import { reviewRouter } from './routers/review.router.js';
 import { gameRouter } from './routers/game.router.js';
 import { userRouter } from './routers/user.router.js';
 export const app = express();
@@ -8,8 +9,9 @@ export const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
-app.use('/game', userRouter);
+app.use('/user', userRouter);
 app.use('/game', gameRouter);
+app.use('/review', reviewRouter);
 app.use((error, req, resp, next) => {
     req;
     next;

@@ -20,4 +20,4 @@ const reviewSchema = new mongoose.Schema({
         required: true,
     },
 });
-export const Game = mongoose.model('Review', reviewSchema);
+export const Review = mongoose.model('Review', reviewSchema);

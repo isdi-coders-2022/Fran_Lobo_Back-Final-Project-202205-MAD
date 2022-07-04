@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-
+import { reviewRouter } from './routers/review.router.js';
 import { gameRouter } from './routers/game.router.js';
 import { userRouter } from './routers/user.router.js';
 export const app = express();
@@ -16,8 +16,9 @@ export interface ExtraRequest extends Request {
     calculo: number;
 }
 
-app.use('/game', userRouter);
+app.use('/user', userRouter);
 app.use('/game', gameRouter);
+app.use('/review', reviewRouter);
 
 app.use((error: Error, req: Request, resp: Response, next: NextFunction) => {
     req;
