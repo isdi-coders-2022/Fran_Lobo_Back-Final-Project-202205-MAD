@@ -7,37 +7,27 @@ export class UserController<T> {
     constructor(public model: Model<T>) {}
 
     getAll = async (req: Request, resp: Response, next: NextFunction) => {
-        console.log('hola');
         resp.setHeader('Content-Type', 'application/json');
-        try {
-            resp.end(JSON.stringify(await this.model.find()));
-        } catch (error) {
-            next(error);
-        }
+        const user = await this.model.find();
+        resp.end(JSON.stringify(user));
     };
 
     getById = async (req: Request, resp: Response, next: NextFunction) => {
         resp.setHeader('Content-Type', 'application/json');
-        try {
-            const result = await this.model.findById(req.params.id);
-            if (result === null) {
-                resp.status(404);
-                resp.end('No object found');
-            }
-            resp.end(JSON.stringify(result));
-        } catch (error) {
-            next(error);
+        const result = await this.model.findById(req.params.id);
+        if (result === null) {
+            resp.status(404);
+            resp.end('No user found');
         }
+        resp.end(JSON.stringify(result));
     };
 
     post = async (req: Request, resp: Response, next: NextFunction) => {
-        console.log(req.body);
-        console.log('post');
         resp.setHeader('Content-Type', 'application/json');
         resp.status(201);
         try {
             const newItem = await this.model.create(req.body);
-            // resp.end(JSON.stringify( newItem));
+
             resp.end(JSON.stringify(req.body));
         } catch (error) {
             next(error);
@@ -47,11 +37,16 @@ export class UserController<T> {
     patch = async (req: Request, resp: Response, next: NextFunction) => {
         resp.setHeader('Content-type', 'application/json');
         try {
-            const newItem = await this.model.findByIdAndUpdate(
+            const updatedItem = await this.model.findByIdAndUpdate(
                 req.params.id,
-                req.body
+                req.body,
+                { new: true }
             );
-            resp.end(JSON.stringify(req.body));
+            if (updatedItem === null) {
+                resp.status(404);
+                resp.end('No user found');
+            }
+            resp.end(JSON.stringify(updatedItem));
         } catch (error) {
             next(error);
         }
@@ -59,18 +54,13 @@ export class UserController<T> {
 
     delete = async (req: Request, resp: Response, next: NextFunction) => {
         resp.setHeader('Content-type', 'application/json');
-        try {
-            const deletedItem = await this.model.findByIdAndDelete(
-                req.params.id
-            );
-            if (deletedItem === null) {
-                resp.status(400);
-                resp.end(`Object not found`);
-            } else {
-                resp.end(JSON.stringify({ _id: deletedItem._id }));
-            }
-        } catch (error) {
-            next(error);
+
+        const deletedItem = await this.model.findByIdAndDelete(req.params.id);
+        if (deletedItem === null) {
+            resp.status(400);
+            resp.end(`User not found`);
+        } else {
+            resp.end(JSON.stringify({ _id: deletedItem._id }));
         }
     };
 }

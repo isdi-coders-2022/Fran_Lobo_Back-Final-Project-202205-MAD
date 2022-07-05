@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
-import { SchemaTypes } from 'mongoose';
+
+import mongoose from 'mongoose';
+
 await mongooseConnect();
 const reviewSchema = new mongoose.Schema({
     idUser: {

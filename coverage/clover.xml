@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1657022823104" clover="3.2.0">
-  <project timestamp="1657022823104" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+
+<coverage generated="1657022471978" clover="3.2.0">
+  <project timestamp="1657022471978" name="All files">
+    <metrics statements="35" coveredstatements="32" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6" elements="47" coveredelements="43" complexity="0" loc="35" ncloc="35" packages="1" files="1" classes="1"/>
+    <file name="user.controller.js" path="/Users/franciscoloboflores/Desktop/ISDI MASTER/Fran_Lobo_Back-Final-Project-202205-MAD/dist/controllers/user.controller.js">
+      <metrics statements="35" coveredstatements="32" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
+      <line num="13" count="2" type="stmt"/>
+      <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="18" count="2" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="2" type="stmt"/>
+      <line num="22" count="2" type="stmt"/>
+      <line num="23" count="2" type="stmt"/>
+      <line num="24" count="2" type="stmt"/>
+      <line num="25" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="31" count="1" type="stmt"/>
+      <line num="32" count="1" type="stmt"/>
+      <line num="33" count="1" type="stmt"/>
+      <line num="34" count="1" type="stmt"/>
+      <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="36" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="39" count="1" type="stmt"/>
+      <line num="42" count="0" type="stmt"/>
+      <line num="45" count="1" type="stmt"/>
+      <line num="46" count="2" type="stmt"/>
+      <line num="47" count="2" type="stmt"/>
+      <line num="48" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="49" count="1" type="stmt"/>
+      <line num="50" count="1" type="stmt"/>
+      <line num="53" count="1" type="stmt"/>
+    </file>
   </project>
 </coverage>
