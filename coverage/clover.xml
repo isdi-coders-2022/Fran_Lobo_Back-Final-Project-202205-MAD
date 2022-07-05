@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1657022471978" clover="3.2.0">
-  <project timestamp="1657022471978" name="All files">
+<coverage generated="1657027344736" clover="3.2.0">
+  <project timestamp="1657027344736" name="All files">
     <metrics statements="35" coveredstatements="32" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6" elements="47" coveredelements="43" complexity="0" loc="35" ncloc="35" packages="1" files="1" classes="1"/>
-    <file name="user.controller.js" path="/Users/franciscoloboflores/Desktop/ISDI MASTER/Fran_Lobo_Back-Final-Project-202205-MAD/dist/controllers/user.controller.js">
+    <file name="game.controller.js" path="/Users/franciscoloboflores/Desktop/ISDI MASTER/Fran_Lobo_Back-Final-Project-202205-MAD/dist/controllers/game.controller.js">
       <metrics statements="35" coveredstatements="32" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6"/>
       <line num="4" count="1" type="stmt"/>
       <line num="6" count="1" type="stmt"/>

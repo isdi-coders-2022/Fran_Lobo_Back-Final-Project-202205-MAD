@@ -71,7 +71,7 @@ describe('Given a game controller', () => {
         });
     });
     describe('When delete method is called', () => {
-        test('If success, then resp.end  should be called with mockResult', async () => {
+        test('If success, then resp.end should be called with mockResult', async () => {
             const mockResult = { _id: '62c30611f0d5e69d5fefa1b4' };
             mockModel.findByIdAndDelete.mockResolvedValue(mockResult);
             await gameController.delete(req, resp, next);
