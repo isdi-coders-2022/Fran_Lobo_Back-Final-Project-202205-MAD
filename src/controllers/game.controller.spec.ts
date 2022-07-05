@@ -32,11 +32,7 @@ describe('Given a game controller', () => {
         test('Then resp.end should be called with mockResult', async () => {
             const mockResult = [{ name: 'Catán' }];
             (mockModel.find as jest.Mock).mockResolvedValue(mockResult);
-            await gameController.getAll(
-                req as Request,
-                resp as Response,
-                next as NextFunction
-            );
+            await gameController.getAll(req as Request, resp as Response);
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
         });
     });
@@ -44,21 +40,13 @@ describe('Given a game controller', () => {
         test('If success, then resp.end should be called with mockResult', async () => {
             const mockResult = { name: 'Catán' };
             (mockModel.findById as jest.Mock).mockResolvedValue(mockResult);
-            await gameController.getById(
-                req as Request,
-                resp as Response,
-                next as NextFunction
-            );
+            await gameController.getById(req as Request, resp as Response);
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
         });
         test('If response is null, then resp.end should be called without mockResult', async () => {
             const mockResult = null;
             (mockModel.findById as jest.Mock).mockResolvedValue(mockResult);
-            await gameController.getById(
-                req as Request,
-                resp as Response,
-                next as NextFunction
-            );
+            await gameController.getById(req as Request, resp as Response);
             expect(resp.status).toHaveBeenCalledWith(404);
             expect(resp.end).toHaveBeenCalledWith('No game found');
         });
@@ -108,11 +96,7 @@ describe('Given a game controller', () => {
             (mockModel.findByIdAndDelete as jest.Mock).mockResolvedValue(
                 mockResult
             );
-            await gameController.delete(
-                req as Request,
-                resp as Response,
-                next as NextFunction
-            );
+            await gameController.delete(req as Request, resp as Response);
             expect(resp.end).toHaveBeenCalledWith(
                 JSON.stringify({ _id: '62c30611f0d5e69d5fefa1b4' })
             );
@@ -122,11 +106,7 @@ describe('Given a game controller', () => {
             (mockModel.findByIdAndDelete as jest.Mock).mockResolvedValue(
                 mockResult
             );
-            await gameController.delete(
-                req as Request,
-                resp as Response,
-                next as NextFunction
-            );
+            await gameController.delete(req as Request, resp as Response);
             expect(resp.status).toHaveBeenLastCalledWith(400),
                 expect(resp.end).toHaveBeenLastCalledWith('Game not found');
         });

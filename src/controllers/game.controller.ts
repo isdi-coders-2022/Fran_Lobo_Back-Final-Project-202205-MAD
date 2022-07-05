@@ -6,13 +6,13 @@ import { Model } from 'mongoose';
 export class GameController<T> {
     constructor(public model: Model<T>) {}
 
-    getAll = async (req: Request, resp: Response, next: NextFunction) => {
+    getAll = async (req: Request, resp: Response) => {
         resp.setHeader('Content-Type', 'application/json');
         const games = await this.model.find();
         resp.end(JSON.stringify(games));
     };
 
-    getById = async (req: Request, resp: Response, next: NextFunction) => {
+    getById = async (req: Request, resp: Response) => {
         resp.setHeader('Content-Type', 'application/json');
         const result = await this.model.findById(req.params.id);
         if (result === null) {
@@ -27,7 +27,7 @@ export class GameController<T> {
         resp.status(201);
         try {
             const newItem = await this.model.create(req.body);
-            resp.end(JSON.stringify(req.body));
+            resp.end(JSON.stringify(newItem));
         } catch (error) {
             next(error);
         }
@@ -51,7 +51,7 @@ export class GameController<T> {
         }
     };
 
-    delete = async (req: Request, resp: Response, next: NextFunction) => {
+    delete = async (req: Request, resp: Response) => {
         resp.setHeader('Content-type', 'application/json');
 
         const deletedItem = await this.model.findByIdAndDelete(req.params.id);

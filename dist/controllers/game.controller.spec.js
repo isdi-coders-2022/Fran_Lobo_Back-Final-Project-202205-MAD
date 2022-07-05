@@ -26,7 +26,7 @@ describe('Given a game controller', () => {
         test('Then resp.end should be called with mockResult', async () => {
             const mockResult = [{ name: 'Catán' }];
             mockModel.find.mockResolvedValue(mockResult);
-            await gameController.getAll(req, resp, next);
+            await gameController.getAll(req, resp);
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
         });
     });
@@ -34,13 +34,13 @@ describe('Given a game controller', () => {
         test('If success, then resp.end should be called with mockResult', async () => {
             const mockResult = { name: 'Catán' };
             mockModel.findById.mockResolvedValue(mockResult);
-            await gameController.getById(req, resp, next);
+            await gameController.getById(req, resp);
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
         });
         test('If response is null, then resp.end should be called without mockResult', async () => {
             const mockResult = null;
             mockModel.findById.mockResolvedValue(mockResult);
-            await gameController.getById(req, resp, next);
+            await gameController.getById(req, resp);
             expect(resp.status).toHaveBeenCalledWith(404);
             expect(resp.end).toHaveBeenCalledWith('No game found');
         });
@@ -74,13 +74,13 @@ describe('Given a game controller', () => {
         test('If success, then resp.end should be called with mockResult', async () => {
             const mockResult = { _id: '62c30611f0d5e69d5fefa1b4' };
             mockModel.findByIdAndDelete.mockResolvedValue(mockResult);
-            await gameController.delete(req, resp, next);
+            await gameController.delete(req, resp);
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify({ _id: '62c30611f0d5e69d5fefa1b4' }));
         });
         test('if response === null,  then resp.end should be called with status Object not found', async () => {
             const mockResult = null;
             mockModel.findByIdAndDelete.mockResolvedValue(mockResult);
-            await gameController.delete(req, resp, next);
+            await gameController.delete(req, resp);
             expect(resp.status).toHaveBeenLastCalledWith(400),
                 expect(resp.end).toHaveBeenLastCalledWith('Game not found');
         });
