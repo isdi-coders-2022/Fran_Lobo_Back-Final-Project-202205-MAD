@@ -3,12 +3,12 @@ export class GameController {
     constructor(model) {
         this.model = model;
     }
-    getAll = async (req, resp, next) => {
+    getAll = async (req, resp) => {
         resp.setHeader('Content-Type', 'application/json');
         const games = await this.model.find();
         resp.end(JSON.stringify(games));
     };
-    getById = async (req, resp, next) => {
+    getById = async (req, resp) => {
         resp.setHeader('Content-Type', 'application/json');
         const result = await this.model.findById(req.params.id);
         if (result === null) {
@@ -22,7 +22,7 @@ export class GameController {
         resp.status(201);
         try {
             const newItem = await this.model.create(req.body);
-            resp.end(JSON.stringify(req.body));
+            resp.end(JSON.stringify(newItem));
         }
         catch (error) {
             next(error);
@@ -42,7 +42,7 @@ export class GameController {
             next(error);
         }
     };
-    delete = async (req, resp, next) => {
+    delete = async (req, resp) => {
         resp.setHeader('Content-type', 'application/json');
         const deletedItem = await this.model.findByIdAndDelete(req.params.id);
         if (deletedItem === null) {
