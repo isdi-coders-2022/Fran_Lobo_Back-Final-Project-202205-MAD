@@ -1,11 +1,11 @@
 // import { iTask, Task } from '../models/task.model.js';
-import { iGame } from '../models/game.model.js';
+import { iGame, Game } from '../models/game.model.js';
 import { iReview, Review } from '../models/review.model';
 import { iUser, User } from '../models/user.model.js';
 import { encrypt } from '../services/authorization.js';
 import { mongooseConnect } from './mongoose.js';
 
-const aUsers: Array<iUser> = [
+let aUsers: Array<iUser> = [
     {
         name: 'Fernando',
         secondName: 'C.I.A',
@@ -31,7 +31,7 @@ const aUsers: Array<iUser> = [
         playList: [],
     },
 ];
-const aReview: Array<iReview> = [
+let aReview: Array<iReview> = [
     {
         idUser: '',
         idGame: '',
@@ -64,7 +64,7 @@ const aReview: Array<iReview> = [
     },
 ];
 
-const aGame: Array<iGame> = [
+let aGame: Array<iGame> = [
     {
         name: 'Catán',
         description:
@@ -172,11 +172,6 @@ const aGame: Array<iGame> = [
     },
 ];
 
-const aTasks: Array<iTask> = [
-    { title: 'Tarea 1', responsible: null, isCompleted: false },
-    { title: 'Tarea 2', responsible: null, isCompleted: false },
-];
-
 export const initDB = async () => {
     const connect = await mongooseConnect();
     aUsers = await Promise.all(
@@ -186,9 +181,10 @@ export const initDB = async () => {
         }))
     );
     const users = await User.insertMany(aUsers);
-    aTasks[0].responsible = users[0].id;
-    aTasks[1].responsible = users[1].id;
-    const tasks = await Task.insertMany(aTasks);
+
+    const games = await Game.insertMany(aGame);
+
+    const reviews = await Review.insertMany(aReview);
 
     let finalUsers = [];
     for (let i = 0; i < users.length; i++) {
@@ -196,16 +192,41 @@ export const initDB = async () => {
         finalUsers[i] = await User.findByIdAndUpdate(
             item.id,
             {
-                $set: { tasks: [tasks[i].id] },
+                $set: { users: [users[i].id] },
             },
-            // { ...item, tasks: [tasks[i].id] },
+
+            { new: true }
+        );
+    }
+    let finalGames = [];
+    for (let i = 0; i < games.length; i++) {
+        const item = games[i];
+        finalGames[i] = await Game.findByIdAndUpdate(
+            item.id,
+            {
+                $set: { games: [games[i].id] },
+            },
+
+            { new: true }
+        );
+    }
+    let finalReviews = [];
+    for (let i = 0; i < reviews.length; i++) {
+        const item = reviews[i];
+        finalReviews[i] = await Review.findByIdAndUpdate(
+            item.id,
+            {
+                $set: { reviews: [reviews[i].id] },
+            },
+
             { new: true }
         );
     }
 
     connect.disconnect();
     return {
-        tasks,
+        games: finalGames,
         users: finalUsers,
+        reviews: finalReviews,
     };
 };
