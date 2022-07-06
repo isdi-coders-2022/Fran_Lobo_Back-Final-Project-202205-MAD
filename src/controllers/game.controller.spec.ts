@@ -61,14 +61,37 @@ describe('Given a game controller', () => {
                 next as NextFunction
             );
             expect(resp.end).toHaveBeenCalled();
-            /*expect(resp.end).toHaveBeenLastCalledWith(
-                JSON.stringify(mockResult)
-            );*/
+        });
+
+        test('If error, then function next should be called with error', async () => {
+            (mockModel.create as jest.Mock).mockRejectedValue({});
+            await gameController.post(
+                req as Request,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(next).toHaveBeenCalled();
+        });
+    });
+    describe('When method postmany is called', () => {
+        test('If success, then resp.end should be called with mockResult', async () => {
+            const mockResult = [{ name: 'Catán' }];
+            req = {
+                params: { _id: '62c30611f0d5e69d5fefa1b4' },
+                body: [{ name: 'Catán' }],
+            };
+            (mockModel.create as jest.Mock).mockReturnValue(mockResult);
+            await gameController.postMany(
+                req as Request,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(resp.end).toHaveBeenCalled();
         });
         test('If error, then function next should be called with error', async () => {
             const mockResult = null;
             (mockModel.create as jest.Mock).mockRejectedValue(mockResult);
-            await gameController.post(
+            await gameController.postMany(
                 req as Request,
                 resp as Response,
                 next as NextFunction
@@ -88,6 +111,24 @@ describe('Given a game controller', () => {
                 next as NextFunction
             );
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
+        });
+        test('if the data to patch is null, status code should be 404 ', async () => {
+            (mockModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
+            await gameController.patch(
+                req as Request,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(resp.end).toHaveBeenCalledWith('No game found');
+        });
+        test('If error, then function next should be called with error', async () => {
+            (mockModel.findByIdAndUpdate as jest.Mock).mockRejectedValue({});
+            await gameController.patch(
+                req as Request,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(next).toHaveBeenCalled();
         });
     });
     describe('When delete method is called', () => {

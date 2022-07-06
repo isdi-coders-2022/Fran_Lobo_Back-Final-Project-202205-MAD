@@ -11,9 +11,8 @@ export interface iReview {
 
 const reviewSchema = new mongoose.Schema({
     idUser: {
-        type: [
-            { type: mongoose.SchemaTypes.ObjectId, ref: 'User', default: null },
-        ],
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
         required: true,
     },
     idGame: {

@@ -23,22 +23,38 @@ export class GameController {
         try {
             const newItem = await this.model.create(req.body);
             resp.end(JSON.stringify(newItem));
+        } catch (error) {
+            next(error);
         }
-        catch (error) {
+    };
+    postMany = async (req, resp, next) => {
+        resp.setHeader('Content-Type', 'application/json');
+        resp.status(201);
+        const arrayGames = req.body;
+        try {
+            const result = arrayGames.map((game) => {
+                this.model.create(game);
+            });
+            resp.end(JSON.stringify(result));
+        } catch (error) {
             next(error);
         }
     };
     patch = async (req, resp, next) => {
         resp.setHeader('Content-type', 'application/json');
         try {
-            const updatedItem = await this.model.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const updatedItem = await this.model.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
             if (updatedItem === null) {
                 resp.status(404);
                 resp.end('No game found');
+            } else {
+                resp.end(JSON.stringify(updatedItem));
             }
-            resp.end(JSON.stringify(updatedItem));
-        }
-        catch (error) {
+        } catch (error) {
             next(error);
         }
     };
@@ -48,8 +64,7 @@ export class GameController {
         if (deletedItem === null) {
             resp.status(400);
             resp.end(`Game not found`);
-        }
-        else {
+        } else {
             resp.end(JSON.stringify({ _id: deletedItem._id }));
         }
     };

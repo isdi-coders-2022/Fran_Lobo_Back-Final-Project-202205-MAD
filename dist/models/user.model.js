@@ -10,11 +10,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    mail: {
+    email: {
         type: String,
         required: true,
+        unique: true,
     },
-    pasword: {
+    password: {
         type: String,
         required: true,
     },
@@ -22,11 +23,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    playList: {
-        type: [
-            { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
-        ],
-        required: true,
-    },
+    playList: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Game',
+            default: null,
+            required: true,
+        },
+    ],
 });
 export const User = mongoose.model('User', userSchema);

@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 import { Model } from 'mongoose';
+import { iGame } from '../models/game.model';
 
 export class GameController<T> {
     constructor(public model: Model<T>) {}
@@ -28,6 +29,19 @@ export class GameController<T> {
         try {
             const newItem = await this.model.create(req.body);
             resp.end(JSON.stringify(newItem));
+        } catch (error) {
+            next(error);
+        }
+    };
+    postMany = async (req: Request, resp: Response, next: NextFunction) => {
+        resp.setHeader('Content-Type', 'application/json');
+        resp.status(201);
+        const arrayGames: iGame[] = req.body;
+        try {
+            const result = arrayGames.map((game) => {
+                this.model.create(game);
+            });
+            resp.end(JSON.stringify(result));
         } catch (error) {
             next(error);
         }
