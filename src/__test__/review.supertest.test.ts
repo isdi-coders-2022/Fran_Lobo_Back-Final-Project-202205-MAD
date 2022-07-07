@@ -4,7 +4,7 @@ import { app } from '../app.js';
 import { initDB } from '../db/init.db';
 import { mongooseConnect } from '../db/mongoose.js';
 import * as aut from '../services/authorization';
-import { iUser } from '../models/user.model.js';
+import { iReview } from '../models/review.model.js';
 
 describe('Given the routes of "/view" ', () => {
     // let connect: typeof import('mongoose');
@@ -53,12 +53,9 @@ describe('Given the routes of "/view" ', () => {
     describe('POST', () => {
         test('If I am logged, then status should be 201', async () => {
             const newReview: iReview = {
-                name: 'Fran',
-                secondName: 'Lobo',
-                email: 'quiensabe@gmail.com',
-                password: '123456',
-                avatar: '',
-                playList: [],
+                idUser: '',
+                idGame: '',
+                text: '',
             };
             const response = await request(app)
                 .post('/revie/')
