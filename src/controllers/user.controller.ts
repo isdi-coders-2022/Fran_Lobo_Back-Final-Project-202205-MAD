@@ -33,7 +33,6 @@ export class UserController<T> {
             req.body.password = await aut.encrypt(req.body.password);
             newItem = await this.model.create(req.body);
         } catch (error) {
-            console.log('ERROR EN REGISTER USER:', error);
             next(error);
             return;
         }

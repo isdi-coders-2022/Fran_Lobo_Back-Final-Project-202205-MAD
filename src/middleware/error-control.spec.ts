@@ -17,5 +17,9 @@ describe('Given the control error', () => {
             errorControl(error, req, resp as Response, next);
             expect(resp.status).toHaveBeenCalledWith(401);
         });
+        test('Then change a status with a error name', () => {
+            errorControl({} as Error, req, resp as Response, next);
+            expect(resp.status).toHaveBeenCalledWith(401);
+        });
     });
 });

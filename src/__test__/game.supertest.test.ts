@@ -76,7 +76,7 @@ describe('Given the routes of "/game" ', () => {
                 .set('Content-Type', 'application/json')
                 .send(newGame);
             //.expect(200);
-            console.log('Game', response.body);
+
             expect(response.statusCode).toBe(201);
         });
     });
@@ -94,7 +94,7 @@ describe('Given the routes of "/game" ', () => {
                 .set('Content-Type', 'application/json')
                 .send(newGame);
             //.expect(200);
-            console.log('Game', response.body);
+
             expect(response.statusCode).toBe(200);
         });
     });

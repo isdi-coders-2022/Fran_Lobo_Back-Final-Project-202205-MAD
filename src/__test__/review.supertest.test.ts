@@ -68,8 +68,6 @@ describe('Given the routes of "/review" ', () => {
                 .send(newReview);
             //.expect(200);
 
-            console.log('RESPONSE', response);
-
             expect(response.statusCode).toBe(201);
         });
     });

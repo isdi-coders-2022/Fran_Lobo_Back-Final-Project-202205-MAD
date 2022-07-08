@@ -85,9 +85,6 @@ describe('Given a review controller', () => {
                 next as NextFunction
             );
             expect(resp.end).toHaveBeenCalled();
-            /*expect(resp.end).toHaveBeenLastCalledWith(
-                JSON.stringify(mockResult)
-            );*/
         });
         test('If error, then function next should be called with error', async () => {
             const mockResult = null;
@@ -102,19 +99,28 @@ describe('Given a review controller', () => {
     });
     describe('When patch method is called', () => {
         test('If success then resp.end should be called with mockResult', async () => {
-            const mockResult = { text: 'Solo he jugado una partida' };
-            (mockModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(
-                mockResult
-            );
+            const mockResult = {
+                text: 'Solo he jugado una partida',
+            };
+            (mockModel.findByIdAndUpdate as jest.Mock).mockReturnValueOnce({
+                populate: jest.fn().mockReturnValue({
+                    populate: jest.fn().mockResolvedValue(mockResult),
+                }),
+            });
             await reviewController.patch(
                 req as Request,
                 resp as Response,
                 next as NextFunction
             );
+
             expect(resp.end).toHaveBeenCalledWith(JSON.stringify(mockResult));
         });
         test('if the data to patch is null, status code should be 404 ', async () => {
-            (mockModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
+            (mockModel.findByIdAndUpdate as jest.Mock).mockReturnValue({
+                populate: jest.fn().mockReturnValue({
+                    populate: jest.fn().mockResolvedValue(null),
+                }),
+            });
             await reviewController.patch(
                 req as Request,
                 resp as Response,
@@ -123,7 +129,11 @@ describe('Given a review controller', () => {
             expect(resp.end).toHaveBeenCalledWith('No review found');
         });
         test('If error, then function next should be called with error', async () => {
-            (mockModel.findByIdAndUpdate as jest.Mock).mockRejectedValue({});
+            (mockModel.findByIdAndUpdate as jest.Mock).mockReturnValue({
+                populate: jest.fn().mockReturnValue({
+                    populate: jest.fn().mockRejectedValue({}),
+                }),
+            });
             await reviewController.patch(
                 req as Request,
                 resp as Response,
