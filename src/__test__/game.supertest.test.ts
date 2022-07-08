@@ -10,9 +10,12 @@ describe('Given the routes of "/game" ', () => {
     // let connect: typeof import('mongoose');
     let data: { [key: string]: Array<any> };
     let token: string;
-    beforeEach(async () => {
+
+    beforeAll(async () => {
         data = await initDB();
-        //  connect =
+    });
+
+    beforeEach(async () => {
         await mongooseConnect();
         token = aut.createToken({
             id: data.users[0].id,
@@ -26,10 +29,10 @@ describe('Given the routes of "/game" ', () => {
     });
 
     describe('When method GET is used', () => {
-        test('If I am not logged, then status should be 401', async () => {
+        test('If I am not logged, then status should be 200', async () => {
             const response = await request(app).get('/game/');
             //.expect(401);
-            expect(response.statusCode).toBe(401);
+            expect(response.statusCode).toBe(200);
         });
 
         test('If I am logged, then status should be 200', async () => {
@@ -42,28 +45,69 @@ describe('Given the routes of "/game" ', () => {
     });
 
     describe('When method GET is used in "/:id" route', () => {
-        test('If I am not logged, then status should be 401', async () => {
+        test('If I am not logged, then status should be 200', async () => {
+            const token = null;
+            token;
             const response = await request(app).get(
                 `/game/${data.games[0].id}`
             );
-            expect(response.statusCode).toBe(401);
+            expect(response.statusCode).toBe(200);
+        });
+        test('If I am logged, then status should be 200', async () => {
+            const response = await request(app)
+                .get('/game/')
+                .set('Authorization', 'Bearer ' + token);
+            //.expect(200);
+            expect(response.statusCode).toBe(200);
         });
     });
 
     describe('POST', () => {
         test('If I am logged, then status should be 201', async () => {
             const newGame: iGame = {
-                name: 'Catán',
+                name: 'CatánTesting',
                 description: 'El mejor juego de mesa ',
-                url: '',
-                image: '',
+                url: 'ere',
+                image: 'ertert',
             };
             const response = await request(app)
-                .post('/game/')
+                .post('/game')
                 .set('Authorization', 'Bearer ' + token)
+                .set('Content-Type', 'application/json')
                 .send(newGame);
             //.expect(200);
+            console.log('Game', response.body);
             expect(response.statusCode).toBe(201);
+        });
+    });
+    describe('PATCH', () => {
+        test('If I am logged, then status should be 200', async () => {
+            const newGame: Partial<iGame> = {
+                // name: 'CatánTesting',
+                // description: 'El mejor juego de mesa ',
+                url: 'ereded',
+                // image: 'ertert',
+            };
+            const response = await request(app)
+                .patch(`/game/${data.games[0].id}`)
+                .set('Authorization', 'Bearer ' + token)
+                .set('Content-Type', 'application/json')
+                .send(newGame);
+            //.expect(200);
+            console.log('Game', response.body);
+            expect(response.statusCode).toBe(200);
+        });
+    });
+    describe('DELETE', () => {
+        test('If I am logged, then status should be 200', async () => {
+            const response = await request(app)
+                .delete(`/game/${data.games[0].id}`)
+                .set('Authorization', 'Bearer ' + token)
+                .set('Content-Type', 'application/json');
+
+            //.expect(200);
+
+            expect(response.statusCode).toBe(200);
         });
     });
 });

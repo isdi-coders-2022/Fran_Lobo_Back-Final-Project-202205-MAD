@@ -15,7 +15,12 @@ reviewRouter.post(
     userRequiredForReviews,
     reviewController.post
 ); //
-reviewRouter.patch('/:id', reviewController.patch); //
+reviewRouter.patch(
+    '/:id',
+    loginRequired,
+    userRequiredForReviews,
+    reviewController.patch
+); //
 reviewRouter.delete(
     '/:id',
     loginRequired,

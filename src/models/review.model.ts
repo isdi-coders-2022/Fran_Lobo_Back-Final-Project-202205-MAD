@@ -1,7 +1,9 @@
-import { mongooseConnect } from '../db/mongoose.js';
 import mongoose from 'mongoose';
+import { mongooseConnect } from '../db/mongoose';
 
-await mongooseConnect();
+(async () => {
+    await mongooseConnect();
+})();
 
 export interface iReview {
     idUser: string;

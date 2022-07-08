@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
 
-await mongooseConnect();
+(async () => {
+    await mongooseConnect();
+})();
 
 export interface iUser {
+    id?: String;
     name: string;
     secondName: string;
     email: string;
@@ -39,7 +42,6 @@ const userSchema = new mongoose.Schema({
             type: mongoose.SchemaTypes.ObjectId,
             ref: 'Game',
             default: null,
-            required: true,
         },
     ],
 });

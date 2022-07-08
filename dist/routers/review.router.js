@@ -8,5 +8,5 @@ export const reviewRouter = Router();
 reviewRouter.get('/', reviewController.getAll);
 reviewRouter.get('/:id', reviewController.getById);
 reviewRouter.post('/', loginRequired, userRequiredForReviews, reviewController.post); //
-reviewRouter.patch('/:id', reviewController.patch); //
+reviewRouter.patch('/:id', loginRequired, userRequiredForReviews, reviewController.patch); //
 reviewRouter.delete('/:id', loginRequired, userRequiredForReviews, reviewController.delete); //

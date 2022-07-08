@@ -59,11 +59,10 @@
     "jest": {
         "roots": [
             "<rootDir>/dist/"
-    
         ],
         "coveragePathIgnorePatterns": [
-          
-            "authorization.js"
-          ]
+            "authorization.js",
+            "app.js"
+        ]
     }
 }

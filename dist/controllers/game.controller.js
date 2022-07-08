@@ -1,3 +1,6 @@
+/* eslint-disable no-extra-boolean-cast */
+/* eslint-disable no-unused-vars */
+import { response } from 'express';
 export class GameController {
     model;
     constructor(model) {
@@ -44,6 +47,7 @@ export class GameController {
     };
     patch = async (req, resp, next) => {
         resp.setHeader('Content-type', 'application/json');
+        response.status(200);
         try {
             const updatedItem = await this.model.findByIdAndUpdate(req.params.id, req.body, { new: true });
             if (updatedItem === null) {
@@ -58,6 +62,7 @@ export class GameController {
     };
     delete = async (req, resp) => {
         resp.setHeader('Content-type', 'application/json');
+        response.status(200);
         const deletedItem = await this.model.findByIdAndDelete(req.params.id);
         if (deletedItem === null) {
             resp.status(400);

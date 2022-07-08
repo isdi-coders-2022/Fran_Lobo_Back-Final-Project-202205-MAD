@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
-await mongooseConnect();
+(async () => {
+    await mongooseConnect();
+})();
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -28,7 +30,6 @@ const userSchema = new mongoose.Schema({
             type: mongoose.SchemaTypes.ObjectId,
             ref: 'Game',
             default: null,
-            required: true,
         },
     ],
 });
