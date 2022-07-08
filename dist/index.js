@@ -10,7 +10,7 @@ const onListening = () => {
     console.log('listening on' + bind);
 };
 app.set('port', PORT);
-const server = http.createServer(app);
+export const server = http.createServer(app);
 server.on('error', onError);
 server.on('Listening', onListening);
 server.listen(PORT);

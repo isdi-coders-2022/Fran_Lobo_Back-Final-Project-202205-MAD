@@ -1,3 +1,4 @@
+import * as aut from '../services/authorization.js';
 export class UserController {
     model;
     constructor(model) {
@@ -10,23 +11,31 @@ export class UserController {
     };
     getById = async (req, resp, next) => {
         resp.setHeader('Content-Type', 'application/json');
-        const result = await this.model.findById(req.params.id);
+        const result = await this.model
+            .findById(req.params.id)
+            .populate('playList');
         if (result === null) {
             resp.status(404);
             resp.end('No user found');
         }
-        resp.end(JSON.stringify(result));
+        else {
+            resp.end(JSON.stringify(result));
+        }
     };
-    post = async (req, resp, next) => {
-        resp.setHeader('Content-Type', 'application/json');
-        resp.status(201);
+    registerUser = async (req, resp, next) => {
+        let newItem;
         try {
-            const newItem = await this.model.create(req.body);
-            resp.end(JSON.stringify(req.body));
+            req.body.password = await aut.encrypt(req.body.password);
+            newItem = await this.model.create(req.body);
         }
         catch (error) {
+            console.log('ERROR EN REGISTER USER:', error);
             next(error);
+            return;
         }
+        resp.setHeader('Content-type', 'application/json');
+        resp.status(201);
+        resp.end(JSON.stringify(newItem));
     };
     patch = async (req, resp, next) => {
         resp.setHeader('Content-type', 'application/json');
@@ -36,7 +45,9 @@ export class UserController {
                 resp.status(404);
                 resp.end('No user found');
             }
-            resp.end(JSON.stringify(updatedItem));
+            else {
+                resp.end(JSON.stringify(updatedItem));
+            }
         }
         catch (error) {
             next(error);
@@ -52,5 +63,26 @@ export class UserController {
         else {
             resp.end(JSON.stringify({ _id: deletedItem._id }));
         }
+    };
+    loginController = async (req, resp, next) => {
+        const findUser = await this.model.findOne({
+            email: req.body.email,
+        });
+        if (!findUser ||
+            !(await aut.compare(req.body.password, findUser.password))) {
+            const error = new Error('Invalid user or password');
+            error.name = 'UserAuthorizationError';
+            next(error);
+            return;
+        }
+        const tokenPayLoad = {
+            id: findUser.id,
+            name: findUser.name,
+            email: findUser.email,
+        };
+        const token = aut.createToken(tokenPayLoad);
+        resp.setHeader('Content-type', 'application/json');
+        resp.status(201);
+        resp.end(JSON.stringify({ token, id: findUser.id }));
     };
 }

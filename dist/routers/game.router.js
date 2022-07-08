@@ -6,5 +6,6 @@ export const gameRouter = Router();
 gameRouter.get('/', gameController.getAll);
 gameRouter.get('/:id', gameController.getById);
 gameRouter.post('/', gameController.post);
+gameRouter.post('/many', gameController.postMany);
 gameRouter.patch('/:id', gameController.patch);
 gameRouter.delete('/:id', gameController.delete);
