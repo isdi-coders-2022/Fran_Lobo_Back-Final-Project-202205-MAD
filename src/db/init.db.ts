@@ -164,20 +164,6 @@ export const initDB = async () => {
     await Game.deleteMany({});
     await Review.deleteMany({});
 
-    // let newArray = [];
-    // for (let i = 0; i < aUsers.length; i++) {
-    //     const item = aUsers[i];
-    //     console.log('USER EMAIL', item.email);
-    //     User.create({
-    //         ...item,
-    //         password: await encrypt(item.password),
-    //     });
-    //     newArray.push({
-    //         ...item,
-    //         password: await encrypt(item.password),
-    //     });
-    // }
-
     const newArray = aUsers.map(async (user) => {
         return { ...user, password: await encrypt(user.password) };
     });
@@ -189,7 +175,6 @@ export const initDB = async () => {
     const games = await Game.insertMany(aGame);
 
     aReview = aReview.map((review, index) => {
-        console.log(users[index]);
         return {
             ...review,
             idUser: users[index]._id.toString(),

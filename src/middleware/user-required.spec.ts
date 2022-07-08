@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import { ExtRequest } from '../interfaces/token';
 import { Review } from '../models/review.model';
+import { User } from '../models/user.model';
 import { userRequiredForReviews } from './user-required';
 
 jest.mock('jsonwebtoken');
@@ -19,7 +20,7 @@ describe('Given the control error', () => {
     });
     describe('When use user-required with valid token', () => {
         test('Then should be call next without error', async () => {
-            Review.findById = jest.fn().mockReturnValue({ id: '1' });
+            User.findById = jest.fn().mockReturnValue({ id: '1' });
             req.get = jest.fn().mockReturnValue('bearer token');
             await userRequiredForReviews(
                 req as Request,
@@ -39,7 +40,7 @@ describe('Given the control error', () => {
                 'User and userID in review are not matching'
             );
             error.name = 'UserAuthorizationError';
-            Review.findById = jest.fn().mockReturnValue({ id: '8' });
+            User.findById = jest.fn().mockReturnValue({ id: '8' });
             req.get = jest.fn().mockReturnValue('bearer token');
             await userRequiredForReviews(
                 req as Request,
@@ -49,23 +50,14 @@ describe('Given the control error', () => {
             expect(next).toHaveBeenCalledWith(error);
         });
         test('Then should  be call next with UserAuthorizationError ', async () => {
-            req = {
-                body: { id: '23' },
-                get: jest.fn(),
-                tokenPayload: { id: '34' },
-            };
-            const error = new Error(
-                'User and userID in review are not matching'
-            );
-            error.name = 'UserAuthorizationErro';
-            Review.findById = jest.fn().mockReturnValue(null);
-            req.get = jest.fn().mockReturnValue('bearer tok');
+            User.findById = jest.fn().mockReturnValue({ _id: '13131' });
+
             await userRequiredForReviews(
                 req as Request,
                 resp as Response,
                 next
             );
-            expect(next).toHaveBeenCalledWith(error);
+            expect(next).toHaveBeenCalled();
         });
     });
 });

@@ -29,7 +29,6 @@ export class UserController {
             newItem = await this.model.create(req.body);
         }
         catch (error) {
-            console.log('ERROR EN REGISTER USER:', error);
             next(error);
             return;
         }
