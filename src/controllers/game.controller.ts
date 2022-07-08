@@ -1,18 +1,19 @@
 /* eslint-disable no-extra-boolean-cast */
 /* eslint-disable no-unused-vars */
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, response, Response } from 'express';
 import { Model } from 'mongoose';
+import { iGame } from '../models/game.model';
 
 export class GameController<T> {
     constructor(public model: Model<T>) {}
 
-    getAll = async (req: Request, resp: Response, next: NextFunction) => {
+    getAll = async (req: Request, resp: Response) => {
         resp.setHeader('Content-Type', 'application/json');
         const games = await this.model.find();
         resp.end(JSON.stringify(games));
     };
 
-    getById = async (req: Request, resp: Response, next: NextFunction) => {
+    getById = async (req: Request, resp: Response) => {
         resp.setHeader('Content-Type', 'application/json');
         const result = await this.model.findById(req.params.id);
         if (result === null) {
@@ -27,7 +28,20 @@ export class GameController<T> {
         resp.status(201);
         try {
             const newItem = await this.model.create(req.body);
-            resp.end(JSON.stringify(req.body));
+            resp.end(JSON.stringify(newItem));
+        } catch (error) {
+            next(error);
+        }
+    };
+    postMany = async (req: Request, resp: Response, next: NextFunction) => {
+        resp.setHeader('Content-Type', 'application/json');
+        resp.status(201);
+        const arrayGames: iGame[] = req.body;
+        try {
+            const result = arrayGames.map((game) => {
+                this.model.create(game);
+            });
+            resp.end(JSON.stringify(result));
         } catch (error) {
             next(error);
         }
@@ -35,6 +49,7 @@ export class GameController<T> {
 
     patch = async (req: Request, resp: Response, next: NextFunction) => {
         resp.setHeader('Content-type', 'application/json');
+        response.status(200);
         try {
             const updatedItem = await this.model.findByIdAndUpdate(
                 req.params.id,
@@ -51,9 +66,9 @@ export class GameController<T> {
         }
     };
 
-    delete = async (req: Request, resp: Response, next: NextFunction) => {
+    delete = async (req: Request, resp: Response) => {
         resp.setHeader('Content-type', 'application/json');
-
+        response.status(200);
         const deletedItem = await this.model.findByIdAndDelete(req.params.id);
         if (deletedItem === null) {
             resp.status(400);

@@ -1,15 +1,18 @@
-import { mongooseConnect } from '../db/mongoose.js';
-
 import mongoose from 'mongoose';
-
-await mongooseConnect();
+import { mongooseConnect } from '../db/mongoose.js';
+(async () => {
+    await mongooseConnect();
+})();
 const reviewSchema = new mongoose.Schema({
     idUser: {
-        type: [{ type: SchemaTypes.ObjectId, ref: 'User', default: null }],
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
         required: true,
     },
     idGame: {
-        type: [{ type: SchemaTypes.ObjectId, ref: 'Game', default: null }],
+        type: [
+            { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+        ],
         required: true,
     },
     text: {
