@@ -9,6 +9,7 @@ export const userRequiredForReviews = async (
 ) => {
     const userID = (req as unknown as ExtRequest).tokenPayload.id;
     const user = await User.findById(req.body.idUser);
+    console.log(user, req.body.idUser);
 
     if (user === null || user.id !== userID) {
         const error = new Error('User and userID in review are not matching');

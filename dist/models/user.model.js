@@ -1,4 +1,4 @@
-import mongoose, { SchemaTypes } from 'mongoose';
+import mongoose from 'mongoose';
 import { mongooseConnect } from '../db/mongoose.js';
 (async () => {
     await mongooseConnect();
@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-<<<<<<< Updated upstream
     playList: [
         {
             type: mongoose.SchemaTypes.ObjectId,
@@ -33,11 +32,5 @@ const userSchema = new mongoose.Schema({
             default: null,
         },
     ],
-=======
-    playList: {
-        type: [{ type: SchemaTypes.ObjectId, ref: 'Game', default: null }],
-        required: true,
-    },
->>>>>>> Stashed changes
 });
 export const User = mongoose.model('User', userSchema);

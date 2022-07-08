@@ -11,7 +11,7 @@ describe('Given the control error', () => {
 
     beforeEach(() => {
         (req = {
-            params: { id: '1' },
+            body: { id: '1' },
             get: jest.fn(),
             tokenPayload: { id: '1' },
         }),
@@ -30,9 +30,16 @@ describe('Given the control error', () => {
         });
 
         test('Then should be call next with error', async () => {
-            const error = new Error();
+            req = {
+                body: { id: '23' },
+                get: jest.fn(),
+                tokenPayload: { id: '34' },
+            };
+            const error = new Error(
+                'User and userID in review are not matching'
+            );
             error.name = 'UserAuthorizationError';
-            Review.findById = jest.fn().mockReturnValue({ id: '1' });
+            Review.findById = jest.fn().mockReturnValue({ id: '8' });
             req.get = jest.fn().mockReturnValue('bearer token');
             await userRequiredForReviews(
                 req as Request,
@@ -42,10 +49,17 @@ describe('Given the control error', () => {
             expect(next).toHaveBeenCalledWith(error);
         });
         test('Then should  be call next with UserAuthorizationError ', async () => {
-            const error = new Error();
-            error.name = 'UserAuthorizationError';
+            req = {
+                body: { id: '23' },
+                get: jest.fn(),
+                tokenPayload: { id: '34' },
+            };
+            const error = new Error(
+                'User and userID in review are not matching'
+            );
+            error.name = 'UserAuthorizationErro';
             Review.findById = jest.fn().mockReturnValue(null);
-            req.get = jest.fn().mockReturnValue('bearer token');
+            req.get = jest.fn().mockReturnValue('bearer tok');
             await userRequiredForReviews(
                 req as Request,
                 resp as Response,
