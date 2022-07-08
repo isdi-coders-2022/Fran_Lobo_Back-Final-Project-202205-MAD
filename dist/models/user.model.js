@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+<<<<<<< HEAD
     playList: [
         {
             type: mongoose.SchemaTypes.ObjectId,
@@ -32,5 +33,13 @@ const userSchema = new mongoose.Schema({
             default: null,
         },
     ],
+=======
+    playList: {
+        type: [
+            { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+        ],
+        required: true,
+    },
+>>>>>>> main
 });
 export const User = mongoose.model('User', userSchema);

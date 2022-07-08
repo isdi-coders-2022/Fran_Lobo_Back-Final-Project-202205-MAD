@@ -29,6 +29,7 @@ export class GameController<T> {
         try {
             const newItem = await this.model.create(req.body);
             resp.end(JSON.stringify(newItem));
+<<<<<<< HEAD
         } catch (error) {
             next(error);
         }
@@ -42,6 +43,8 @@ export class GameController<T> {
                 this.model.create(game);
             });
             resp.end(JSON.stringify(result));
+=======
+>>>>>>> main
         } catch (error) {
             next(error);
         }
